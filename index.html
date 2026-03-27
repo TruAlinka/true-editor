@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title id="page-title">Редактор Игры</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; display: flex; gap: 20px; padding: 20px; background-color: #f4f4f9; color: #333; min-height: 100vh; box-sizing: border-box; margin: 0; }
+    .editor, .preview { flex: 1; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow-y: auto; max-height: 95vh; }
+    .editor-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px; margin-bottom: 15px; }
+    h1, h2 { margin: 0; padding: 0; }
+    h2 { margin-top: 20px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+    label { display: block; margin-top: 15px; font-weight: bold; }
+    input[type='text'], input[type='url'], textarea, select { width: 95%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; box-sizing: border-box; }
+    textarea { height: 150px; resize: vertical; font-family: monospace; }
+    .controls-group { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; margin-top: 10px; }
+    .control-item { display: flex; flex-direction: column; }
+    .control-item-row { display: flex; align-items: center; gap: 10px; }
+    .fill-type-row { flex-direction: row; align-items: center; gap: 4px; margin-top: 5px;}
+    input[type='color'] { width: 50px; height: 40px; border: none; padding: 0; cursor: pointer; }
+    input[type='range'] { flex-grow: 1; }
+    #generate-btn { width: 100%; padding: 15px; background-color: #007bff; color: white; border: none; border-radius: 5px; font-size: 18px; cursor: pointer; margin-top: 20px; }
+    #generate-btn:hover { background-color: #0056b3; }
+    #lang-toggle { padding: 8px 12px; background-color: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+    #lang-toggle:hover { background-color: #5a6268; }
+    #output-code, #output-iframe { font-family: monospace; white-space: pre-wrap; background-color: #2d2d2d; color: #f1f1f1; height: 150px; border-radius: 4px; margin-top: 5px; resize: vertical; }
+    #preview-container { width: 100%; height: 720px; border: 1px solid #ccc; border-radius: 4px; }
+    .help-text { font-size: 14px; color: #666; margin-top: 5px; background: #f9f9f9; padding: 10px; border-radius: 4px; }
+    button.copy-btn, button.download-btn { margin-top: 8px; width: fit-content; background-color: #007bff; color: white; border: none; border-radius: 4px; padding: 5px 12px; cursor: pointer; font-size: 14px; margin-bottom: 10px; }
+    button.copy-btn:hover, button.download-btn:hover { background-color: #0056b3; }
+  </style>
+</head>
+<body>
+  <div class="editor">
+    <div class="editor-header">
+      <h1 id="editor-title">Редактор Игры</h1>
+      <button id="lang-toggle">EN</button>
+    </div>
+
+    <h2 id="section-general">1. Общие настройки</h2>
+    <label for="game-title" id="label-game-title">Название/тема игры:</label>
+    <input type="text" id="game-title" value="Интерактивная Викторина" />
+
+    <h2 id="section-appearance">2. Внешний вид</h2>
+    <div class="controls-group">
+      <div class="control-item">
+        <label for="bg-color" id="label-bg-color">Цвет фона:</label>
+        <div class="control-item-row fill-type-row">
+            <select class="fill-type" data-target="bg-color">
+                <option value="color">Цвет</option>
+                <option value="gradient">Градиент</option>
+            </select>
+            <input type="color" id="bg-color" value="#f0f8ff" />
+            <input type="color" id="bg-color2" value="#ffffff" style="display:none;" />
+        </div>
+      </div>
+      <div class="control-item">
+        <label for="definition-bg-color" id="label-definition-bg-color">Фон блока вопроса:</label>
+        <div class="control-item-row fill-type-row">
+          <select class="fill-type" data-target="definition-bg-color">
+            <option value="color">Цвет</option>
+            <option value="gradient">Градиент</option>
+          </select>
+          <input type="color" id="definition-bg-color" value="#ffffff" />
+          <input type="color" id="definition-bg-color2" value="#eeeeee" style="display:none;" />
+        </div>
+      </div>
+       <div class="control-item-row" style="margin-top: 30px;">
+        <input type="checkbox" id="transparent-bg" style="width: auto;">
+        <label for="transparent-bg" id="label-transparent-bg" style="margin-top: 0; font-weight: normal;">Сделать фон прозрачным</label>
+      </div>
+    </div>
+    <div class="controls-group">
+      <div class="control-item">
+        <label for="btn-check-bg-color" id="label-btn-check-bg-color">Цвет фона "Проверить":</label>
+        <div class="control-item-row fill-type-row">
+            <select class="fill-type" data-target="btn-check-bg-color">
+                <option value="color">Цвет</option>
+                <option value="gradient">Градиент</option>
+            </select>
+            <input type="color" id="btn-check-bg-color" value="#007bff" />
+            <input type="color" id="btn-check-bg-color2" value="#0da0e8" style="display:none;" />
+        </div>
+      </div>
+      <div class="control-item">
+        <label for="btn-check-text-color" id="label-btn-check-text-color">Цвет текста "Проверить":</label>
+        <input type="color" id="btn-check-text-color" value="#ffffff" />
+      </div>
+    </div>
+    <div class="controls-group">
+      <div class="control-item">
+        <label for="btn-restart-bg-color" id="label-btn-restart-bg-color">Цвет фона "Сброс":</label>
+        <div class="control-item-row fill-type-row">
+            <select class="fill-type" data-target="btn-restart-bg-color">
+                <option value="color">Цвет</option>
+                <option value="gradient">Градиент</option>
+            </select>
+            <input type="color" id="btn-restart-bg-color" value="#ffc107" />
+            <input type="color" id="btn-restart-bg-color2" value="#ff9307" style="display:none;" />
+        </div>
+      </div>
+      <div class="control-item">
+        <label for="btn-restart-text-color" id="label-btn-restart-text-color">Цвет текста "Сброс":</label>
+        <input type="color" id="btn-restart-text-color" value="#333333" />
+      </div>
+    </div>
+    <div><label for="btn-radius" id="label-btn-radius">Скругленность углов:</label><div class="control-item-row"><input type="range" id="btn-radius" min="0" max="25" value="8" /><span id="btn-radius-value">8px</span></div></div>
+
+    <h2 id="section-game-type">3. Тип игры</h2>
+    <label for="game-type" id="label-game-type">Выберите тип задания:</label>
+    <select id="game-type"><option value="anagram">Расставить буквы</option><option value="input">Собрать из букв (с лишними)</option></select>
+
+    <h2 id="section-content">4. Содержимое игры</h2>
+    <label for="game-data" id="label-game-data">Вопросы и ответы:</label>
+    <div class="help-text" id="help-text">Формат: <b>Вопрос | Ответ | Ссылка на картинку (необязательно)</b></div>
+    <textarea id="game-data">Самая большая планета Солнечной системы | Юпитер | https://i.ibb.co/L8y2hQZ/jupiter.png
+Столица Японии | Токио | https://i.ibb.co/Wc6YpQ8/tokyo.jpg
+Process of water turning into vapor | Evaporation |</textarea>
+
+    <h2 id="section-feedback">5. Обратная связь</h2>
+    <label for="feedback-correct" id="label-feedback-correct">Текст при верном ответе:</label><input type="text" id="feedback-correct" value="Верно! Отлично!" />
+    <label for="feedback-correct-img" class="feedback-image-input" id="label-feedback-correct-img">Изображение (URL):</label><input type="url" id="feedback-correct-img" placeholder="https://example.com/happy.png" />
+    <label for="feedback-incorrect" id="label-feedback-incorrect">Текст при неверном ответе:</label><input type="text" id="feedback-incorrect" value="Ошибка, попробуй еще раз." />
+    <label for="feedback-incorrect-img" class="feedback-image-input" id="label-feedback-incorrect-img">Изображение (URL):</label><input type="url" id="feedback-incorrect-img" placeholder="https://example.com/sad.png" />
+    <label for="feedback-final" id="label-feedback-final">Текст по завершении игры:</label><input type="text" id="feedback-final" value="Игра окончена! Вы молодец!" />
+    
+    <label for="final-effect-select" id="label-final-effect-select">Финальный эффект:</label>
+    <select id="final-effect-select">
+      <option value="none">Без эффекта</option>
+      <option value="custom">Своя GIF-анимация</option>
+      <option value="firefork">Firefork (огонь)</option>
+    </select>
+    <input type="url" id="final-effect-custom-url" placeholder="https://example.com/your.gif" style="display:none;" />
+
+    <button id="generate-btn">Сгенерировать и обновить превью</button>
+
+    <h2 id="section-code">6. Готовый код</h2>
+    <label for="output-iframe" id="label-output-iframe">1. Код для вставки в Genially:</label>
+    <button id="copy-iframe-btn" class="copy-btn">Скопировать</button>
+    <textarea id="output-iframe" readonly></textarea>
+    
+    <label for="output-code" id="label-output-code">2. Полный HTML-код (альтернатива):</label>
+    <button id="download-html-btn" class="download-btn">Скачать HTML</button>
+    <textarea id="output-code" readonly style="height: 80px;"></textarea>
+  </div>
+
+  <div class="preview">
+    <h1 id="preview-title">Превью Игры</h1>
+    <iframe id="preview-container" title="Превью игры"></iframe>
+  </div>
+<script>
+/* ...все данные переводов из твоей версии, не меняем! ... */
+
+function getFillValue(colorId) {
+    const sel = document.querySelector('.fill-type[data-target="' + colorId + '"]');
+    const colorInput1 = document.getElementById(colorId);
+    const colorInput2 = document.getElementById(colorId + "2");
+    if (sel && sel.value === "gradient") {
+        return {type: "gradient", value: `linear-gradient(90deg, ${colorInput1.value} 0%, ${colorInput2.value} 100%)`};
+    } else {
+        return {type: "color", value: colorInput1.value};
+    }
+}
+
+/* ...все остальные функции без изменений, кроме блока показа-скрытия color2 палитры... */
+
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById('generate-btn').addEventListener('click', generateGame);
+    document.getElementById('lang-toggle').addEventListener("click", () => {
+        setLanguage(currentLang === "ru" ? "en" : "ru");
+        generateGame();
+    });
+    document.getElementById('copy-iframe-btn').addEventListener("click", () => {
+        navigator.clipboard.writeText(document.getElementById('output-iframe').value).then(() => {
+            alert(translations[currentLang].copySuccess);
+        });
+    });
+    document.getElementById('download-html-btn').addEventListener("click", () => {
+        const blob = new Blob([document.getElementById('output-code').value], { type: "text/html" });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = `${getSettings().gameTitle.replace(/[^a-z0-9]/gi, '_').toLowerCase() || 'game'}.html`;
+        a.click();
+        URL.revokeObjectURL(a.href);
+    });
+    document.getElementById('final-effect-select').addEventListener('change', (e) => {
+        document.getElementById('final-effect-custom-url').style.display = e.target.value === 'custom' ? 'block' : 'none';
+    });
+    document.getElementById('transparent-bg').addEventListener('change', (e) => {
+        document.getElementById('bg-color').disabled = e.target.checked;
+        document.getElementById('bg-color2').disabled = e.target.checked;
+        document.querySelector('.fill-type[data-target="bg-color"]').disabled = e.target.checked;
+    });
+
+    document.querySelectorAll('.fill-type').forEach(sel => {
+        const target = sel.getAttribute('data-target');
+        sel.addEventListener('change', function() {
+            const colorInput2 = document.getElementById(target + "2");
+            if (this.value === "gradient") {
+                colorInput2.style.display = "";
+            } else {
+                colorInput2.style.display = "none";
+            }
+        });
+    });
+
+    document.getElementById('btn-radius').addEventListener('input', function() {
+        document.getElementById('btn-radius-value').textContent = this.value + 'px';
+    });
+    setLanguage("ru");
+    generateGame();
+});
+</script>
+</body>
+</html>
