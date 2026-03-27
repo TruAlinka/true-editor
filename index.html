@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Редактор Игры</title>
+  <title id="page-title">Редактор Игры</title>
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; display: flex; gap: 20px; padding: 20px; background-color: #f4f4f9; color: #333; min-height: 100vh; box-sizing: border-box; margin: 0; }
     .editor, .preview { flex: 1; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow-y: auto; max-height: 95vh; }
@@ -16,7 +16,6 @@
     .controls-group { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; margin-top: 10px; }
     .control-item { display: flex; flex-direction: column; }
     .control-item-row { display: flex; align-items: center; gap: 10px; }
-    .fill-type-row { flex-direction: row; align-items: center; gap: 4px; margin-top: 5px;}
     input[type='color'] { width: 50px; height: 40px; border: none; padding: 0; cursor: pointer; }
     input[type='range'] { flex-grow: 1; }
     #generate-btn { width: 100%; padding: 15px; background-color: #007bff; color: white; border: none; border-radius: 5px; font-size: 18px; cursor: pointer; margin-top: 20px; }
@@ -36,25 +35,23 @@
       <h1 id="editor-title">Редактор Игры</h1>
       <button id="lang-toggle">EN</button>
     </div>
+
     <h2 id="section-general">1. Общие настройки</h2>
     <label for="game-title" id="label-game-title">Название/тема игры:</label>
     <input type="text" id="game-title" value="Интерактивная Викторина" />
+
     <h2 id="section-appearance">2. Внешний вид</h2>
     <div class="controls-group">
       <div class="control-item">
         <label for="bg-color" id="label-bg-color">Цвет фона:</label>
-        <div class="control-item-row fill-type-row">
-            <select class="fill-type" data-target="bg-color"><option value="color">Цвет</option><option value="gradient">Градиент</option></select>
+        <div class="control-item-row">
             <input type="color" id="bg-color" value="#f0f8ff" />
-            <input type="color" id="bg-color2" value="#ffffff" style="display:none;" />
         </div>
       </div>
       <div class="control-item">
         <label for="definition-bg-color" id="label-definition-bg-color">Фон блока вопроса:</label>
-        <div class="control-item-row fill-type-row">
-          <select class="fill-type" data-target="definition-bg-color"><option value="color">Цвет</option><option value="gradient">Градиент</option></select>
+        <div class="control-item-row">
           <input type="color" id="definition-bg-color" value="#ffffff" />
-          <input type="color" id="definition-bg-color2" value="#eeeeee" style="display:none;" />
         </div>
       </div>
        <div class="control-item-row" style="margin-top: 30px;">
@@ -65,10 +62,8 @@
     <div class="controls-group">
       <div class="control-item">
         <label for="btn-check-bg-color" id="label-btn-check-bg-color">Цвет фона "Проверить":</label>
-        <div class="control-item-row fill-type-row">
-            <select class="fill-type" data-target="btn-check-bg-color"><option value="color">Цвет</option><option value="gradient">Градиент</option></select>
+        <div class="control-item-row">
             <input type="color" id="btn-check-bg-color" value="#007bff" />
-            <input type="color" id="btn-check-bg-color2" value="#0da0e8" style="display:none;" />
         </div>
       </div>
       <div class="control-item">
@@ -79,10 +74,8 @@
     <div class="controls-group">
       <div class="control-item">
         <label for="btn-restart-bg-color" id="label-btn-restart-bg-color">Цвет фона "Сброс":</label>
-        <div class="control-item-row fill-type-row">
-            <select class="fill-type" data-target="btn-restart-bg-color"><option value="color">Цвет</option><option value="gradient">Градиент</option></select>
+        <div class="control-item-row">
             <input type="color" id="btn-restart-bg-color" value="#ffc107" />
-            <input type="color" id="btn-restart-bg-color2" value="#ff9307" style="display:none;" />
         </div>
       </div>
       <div class="control-item">
@@ -91,51 +84,453 @@
       </div>
     </div>
     <div><label for="btn-radius" id="label-btn-radius">Скругленность углов:</label><div class="control-item-row"><input type="range" id="btn-radius" min="0" max="25" value="8" /><span id="btn-radius-value">8px</span></div></div>
+
     <h2 id="section-game-type">3. Тип игры</h2>
     <label for="game-type" id="label-game-type">Выберите тип задания:</label>
     <select id="game-type"><option value="anagram">Расставить буквы</option><option value="input">Собрать из букв (с лишними)</option></select>
+
     <h2 id="section-content">4. Содержимое игры</h2>
     <label for="game-data" id="label-game-data">Вопросы и ответы:</label>
     <div class="help-text" id="help-text">Формат: <b>Вопрос | Ответ | Ссылка на картинку (необязательно)</b></div>
     <textarea id="game-data">Самая большая планета Солнечной системы | Юпитер | https://i.ibb.co/L8y2hQZ/jupiter.png
 Столица Японии | Токио | https://i.ibb.co/Wc6YpQ8/tokyo.jpg
 Process of water turning into vapor | Evaporation |</textarea>
+
     <h2 id="section-feedback">5. Обратная связь</h2>
     <label for="feedback-correct" id="label-feedback-correct">Текст при верном ответе:</label><input type="text" id="feedback-correct" value="Верно! Отлично!" />
-    <label for="feedback-correct-img" id="label-feedback-correct-img">Изображение (URL):</label><input type="url" id="feedback-correct-img" placeholder="https://example.com/happy.png" />
+    <label for="feedback-correct-img" class="feedback-image-input" id="label-feedback-correct-img">Изображение (URL):</label><input type="url" id="feedback-correct-img" placeholder="https://example.com/happy.png" />
     <label for="feedback-incorrect" id="label-feedback-incorrect">Текст при неверном ответе:</label><input type="text" id="feedback-incorrect" value="Ошибка, попробуй еще раз." />
-    <label for="feedback-incorrect-img" id="label-feedback-incorrect-img">Изображение (URL):</label><input type="url" id="feedback-incorrect-img" placeholder="https://example.com/sad.png" />
+    <label for="feedback-incorrect-img" class="feedback-image-input" id="label-feedback-incorrect-img">Изображение (URL):</label><input type="url" id="feedback-incorrect-img" placeholder="https://example.com/sad.png" />
     <label for="feedback-final" id="label-feedback-final">Текст по завершении игры:</label><input type="text" id="feedback-final" value="Игра окончена! Вы молодец!" />
+    
     <label for="final-effect-select" id="label-final-effect-select">Финальный эффект:</label>
-    <select id="final-effect-select"><option value="none">Без эффекта</option><option value="custom">Своя GIF-анимация</option><option value="firefork">Firefork (огонь)</option></select>
+    <select id="final-effect-select">
+      <option value="none">Без эффекта</option>
+      <option value="custom">Своя GIF-анимация</option>
+      <option value="firefork">Firefork (огонь)</option>
+    </select>
     <input type="url" id="final-effect-custom-url" placeholder="https://example.com/your.gif" style="display:none;" />
+
     <button id="generate-btn">Сгенерировать и обновить превью</button>
+
     <h2 id="section-code">6. Готовый код</h2>
     <label for="output-iframe" id="label-output-iframe">1. Код для вставки в Genially:</label>
     <button id="copy-iframe-btn" class="copy-btn">Скопировать</button>
     <textarea id="output-iframe" readonly></textarea>
+    
     <label for="output-code" id="label-output-code">2. Полный HTML-код (альтернатива):</label>
     <button id="download-html-btn" class="download-btn">Скачать HTML</button>
     <textarea id="output-code" readonly style="height: 80px;"></textarea>
   </div>
+
   <div class="preview">
     <h1 id="preview-title">Превью Игры</h1>
     <iframe id="preview-container" title="Превью игры"></iframe>
   </div>
 <script>
-const translations={ru:{editorTitle:"Редактор Игры",previewTitle:"Превью Игры",sectionGeneral:"1. Общие настройки",labelGameTitle:"Название/тема игры:",sectionAppearance:"2. Внешний вид",labelBgColor:"Цвет фона:",labelTransparentBg:"Сделать фон прозрачным",labelDefinitionBgColor:"Фон блока вопроса:",labelBtnCheckBgColor:'Цвет фона "Проверить":',labelBtnCheckTextColor:'Цвет текста "Проверить":',labelBtnRestartBgColor:'Цвет фона "Сброс":',labelBtnRestartTextColor:'Цвет текста "Сброс":',labelBtnRadius:"Скругленность углов:",sectionGameType:"3. Тип игры",labelGameType:"Выберите тип задания:",sectionContent:"4. Содержимое игры",labelGameData:"Вопросы и ответы:",helpText:"Формат: <b>Вопрос | Ответ | Ссылка на картинку (необязательно)</b>",sectionFeedback:"5. Обратная связь",labelFeedbackCorrect:"Текст при верном ответе:",labelFeedbackCorrectImg:"Изображение (URL):",labelFeedbackIncorrect:"Текст при неверном ответе:",labelFeedbackIncorrectImg:"Изображение (URL):",labelFeedbackFinal:"Текст по завершении игры:",labelFinalEffectSelect:"Финальный эффект:",generateBtn:"Сгенерировать и обновить превью",sectionCode:"6. Готовый код",labelOutputIframe:"1. Код для вставки в Genially:",labelOutputCode:"2. Полный HTML-код (альтернатива):",copySuccess:"Код скопирован!",downloadSuccess:"Файл скачан!"},en:{editorTitle:"Game Editor",previewTitle:"Game Preview",sectionGeneral:"1. General Settings",labelGameTitle:"Game Title/Theme:",sectionAppearance:"2. Appearance",labelBgColor:"Background Color:",labelTransparentBg:"Make background transparent",labelDefinitionBgColor:"Question block background:",labelBtnCheckBgColor:"Check button background:",labelBtnCheckTextColor:"Check button text:",labelBtnRestartBgColor:"Restart button background:",labelBtnRestartTextColor:"Restart button text:",labelBtnRadius:"Button corner rounding:",sectionGameType:"3. Game Type",labelGameType:"Choose task type:",sectionContent:"4. Game Content",labelGameData:"Questions and Answers:",helpText:"Format: <b>Question | Answer | Image URL (optional)</b>",sectionFeedback:"5. Feedback",labelFeedbackCorrect:"Text for correct answer:",labelFeedbackCorrectImg:"Image (URL):",labelFeedbackIncorrect:"Text for incorrect answer:",labelFeedbackIncorrectImg:"Image (URL):",labelFeedbackFinal:"Text for game completion:",labelFinalEffectSelect:"Final Effect:",generateBtn:"Generate & Update Preview",sectionCode:"6. Final Code",labelOutputIframe:"1. Code to embed in Genially:",labelOutputCode:"2. Full HTML (alternative):",copySuccess:"Code copied!",downloadSuccess:"File downloaded!"}};
-let currentLang="ru";
-function getFillValue(colorId){const sel=document.querySelector('.fill-type[data-target="'+colorId+'"]');const c1=document.getElementById(colorId);const c2=document.getElementById(colorId+"2");if(sel&&sel.value==="gradient"){return{type:"gradient",value:`linear-gradient(90deg, ${c1.value} 0%, ${c2.value} 100%)`};}return{type:"color",value:c1.value};}
-function getSettings(){const s={};document.querySelectorAll('.editor input, .editor select, .editor textarea').forEach(el=>{const key=el.id.replace(/-([a-z])/g,g=>g[1].toUpperCase());s[key]=el.type==='checkbox'?el.checked:el.value;});s.bgFill=getFillValue("bg-color");s.definitionBgFill=getFillValue("definition-bg-color");s.btnCheckBgFill=getFillValue("btn-check-bg-color");s.btnRestartBgFill=getFillValue("btn-restart-bg-color");return s;}
-function getFillCss(obj,prop="background"){if(!obj)return"";if(obj.type==="gradient"&&obj.value)return`${prop}: ${obj.value} !important;`;return obj.value?`${prop}: ${obj.value} !important;`:"";};
-function getFinalEffectUrl(s){if(s.finalEffectSelect==="firefork")return"firefork";if(s.finalEffectSelect==='custom')return s.finalEffectCustomUrl;return"";}
-function generateBaseCss(s){let bgCss=s.bgFill?.type==="gradient"&&s.bgFill.value?`background:${s.bgFill.value};`:`background-color:${s.transparentBg?'transparent':s.bgColor||'#f0f8ff'};`;return`body{font-family:sans-serif;${bgCss}margin:0;padding:20px;display:flex;justify-content:center;align-items:center;min-height:100vh;box-sizing:border-box}.container{background:white;max-width:600px;width:90%;padding:20px;border-radius:10px;box-shadow:0 0 15px rgba(0,0,0,0.1);text-align:center}h1{margin:0 0 15px}#game-image{max-width:100%;max-height:150px;border-radius:8px;margin:0 auto 20px;object-fit:contain;display:block}.definition{font-size:1.2em;margin-bottom:20px;${getFillCss(s.definitionBgFill)}padding:10px;border-radius:8px;min-height:50px}#feedback{margin-top:20px;font-size:1.1em;font-weight:700;min-height:1.5em}#feedback-image{max-width:80px;margin-top:10px;border-radius:8px;display:none}.correct{color:#28a745}.error{color:#dc3545}.button{border:none;border-radius:${s.btnRadius}px;cursor:pointer;font-weight:bold;padding:12px 24px;margin:5px;user-select:none;transition:filter 0.2s}.button:hover{filter:brightness(0.9)}.final-overlay{position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.7);display:flex;justify-content:center;align-items:center;z-index:999;cursor:pointer}.final-overlay img,.final-overlay iframe{max-width:90vw;max-height:90vh;border-radius:12px}`;}
-function generateAnagramGame(s,data){const css=generateBaseCss(s)+`#clear-btn{${getFillCss(s.btnRestartBgFill)}color:${s.btnRestartTextColor};}#check-btn{${getFillCss(s.btnCheckBgFill)}color:${s.btnCheckTextColor};}.answer-display,.letter-pool{margin:20px 0;display:flex;flex-wrap:wrap;justify-content:center;gap:10px;}.answer-display{background:#eee;border-radius:8px;padding:15px;min-height:50px;border:2px dashed #ccc;}.letter-btn{font-size:1.5em;width:50px;height:50px;${getFillCss(s.btnCheckBgFill)}color:${s.btnCheckTextColor};display:flex;justify-content:center;align-items:center}.letter-btn.placed{background-color:#6c757d;cursor:default}.controls{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}`;const settingsJs={correctText:s.feedbackCorrect,correctImg:s.feedbackCorrectImg,incorrectText:s.feedbackIncorrect,incorrectImg:s.feedbackIncorrectImg,finalText:s.feedbackFinal};const js=`let i=0;const d=${JSON.stringify(data)},s=${JSON.stringify(settingsJs)},u="${getFinalEffectUrl(s)}";const E={h:document.querySelector("h1"),img:document.getElementById("game-image"),def:document.querySelector(".definition"),ans:document.querySelector(".answer-display"),pool:document.querySelector(".letter-pool"),fb:document.getElementById("feedback"),fbi:document.getElementById("feedback-image"),ctrls:document.quer
-ySelector(".controls")};function showFbImg(u){E.fbi.src=u;E.fbi.style.display=u?"block":"none"}function l(){showFbImg(null);E.fb.textContent="";E.ans.style.display="";E.pool.style.display="";if(i>=d.length){E.def.textContent=s.finalText;E.img.style.display="none";E.ans.innerHTML="";E.ans.style.display="none";E.pool.innerHTML="";E.pool.style.display="none";E.ctrls.style.display="none";if(u){const e=document.createElement("div");e.className="final-overlay";if(u==="firefork"){e.innerHTML='<iframe src="https://trualinka.github.io/firefork/" style="border:none;width:95vw;height:60vh;" allowfullscreen></iframe>';}else{e.innerHTML=\`<img src="\${u}">\`;}e.onclick=()=>e.remove();document.body.appendChild(e);}return;}const{q,a,img}=d[i];E.def.textContent=q;E.img.src=img;E.img.style.display=img?"block":"none";E.ans.innerHTML="";E.ans.style.display="";E.pool.innerHTML="";E.pool.style.display="";[...a.toUpperCase().replace(/\\s/g,"")].sort(()=>.5-Math.random()).forEach(t=>{const a=document.createElement("button");a.className="button letter-btn";a.textContent=t;a.onclick=()=>{if(a.classList.contains("placed"))return;a.classList.add("placed");const e=document.createElement("button");e.className="button letter-btn";e.textContent=t;e.onclick=()=>{a.classList.remove("placed");e.remove()};E.ans.appendChild(e)};E.pool.appendChild(a)});}E.ctrls.querySelector("#check-btn").onclick=()=>{const t=[...E.ans.children].map(e=>e.textContent).join(""),a=d[i].a.toUpperCase().replace(/\\s/g,"");if(t===a){E.fb.textContent=s.correctText;E.fb.className="correct";showFbImg(s.correctImg);i++;setTimeout(l,1500)}else{E.fb.textContent=s.incorrectText;E.fb.className="error";showFbImg(s.incorrectImg)}};E.ctrls.querySelector("#clear-btn").onclick=()=>l();l();`;return\`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>\${s.gameTitle}</title><style>\${css}</style></head><body><div class="container"><h1>\${s.gameTitle}</h1><img id="game-image" src=""><p class="definition"></p><div class="answer-display"></div><div class="letter-pool"></div><div class="controls"><button id="check-btn" class="button">Проверить</button><button id="clear-btn" class="button">Сброс</button></div><p id="feedback"></p><img id="feedback-image"></div><script>\${js}<\/script></body></html>\`;}
-function generateInputGame(s,data){const css=generateBaseCss(s)+`#answer-place{min-height:50px;display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:15px 0 25px;background:#f3f3f3;border-radius:8px;border:2px dashed #ddd;padding:15px;}#letter-pool{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;}.letter-btn{font-size:1.3em;width:46px;height:46px;${getFillCss(s.btnCheckBgFill)}color:${s.btnCheckTextColor};display:flex;justify-content:center;align-items:center;border:none;border-radius:${s.btnRadius}px;cursor:pointer;}.letter-btn.placed{background-color:#bdbdbd;cursor:default;}.controls{display:flex;justify-content:center;align-items:center;gap:10px;margin-bottom:15px;}#check-btn{${getFillCss(s.btnCheckBgFill)}color:${s.btnCheckTextColor};}#clear-btn{${getFillCss(s.btnRestartBgFill)}color:${s.btnRestartTextColor};}`;const settingsJs={correctText:s.feedbackCorrect,correctImg:s.feedbackCorrectImg,incorrectText:s.feedbackIncorrect,incorrectImg:s.feedbackIncorrectImg,finalText:s.feedbackFinal};const js=`let i=0;const d=${JSON.stringify(data)},s=${JSON.stringify(settingsJs)},u="${getFinalEffectUrl(s)}";const E={h:document.querySelector("h1"),img:document.getElementById("game-image"),def:document.querySelector(".definition"),answerPlace:document.getElementById("answer-place"),letterPool:document.getElementById("letter-pool"),fb:document.getElementById("feedback"),fbi:document.getElementById("feedback-image"),ctrls:document.querySelector(".controls")};function showFbImg(u){E.fbi.src=u;E.fbi.style.display=u?"block":"none"}function l(){showFbImg(null);E.fb.textContent="";E.answerPlace.style.display="";E.letterPool.style.display="";if(i>=d.length){E.def.textContent=s.finalText;E.img.style.display="none";E.answerPlace.innerHTML="";E.answerPlace.style.display="none";E.letterPool.innerHTML="";E.letterPool.style.display="none";E.ctrls.style.display="none";if(u){const e=document.createElement("div");e.className="final-overlay";if(u==="firefork"){e.innerHTML='<iframe src="https://trualinka.github.io/firefork/" style="border:none;width:95vw;height:60vh;" allowfullscreen></iframe>';}else{e.innerHTML=\`<img src="\${u}">\`;}e.onclick=()=>e.remove();document.body.appendChild(e);}return;}const{q,a,img}=d[i];E.def.textContent=q;E.img.src=img;E.img.style.display=img?"block":"none";E.ctrls.style.display="flex";E.answerPlace.innerHTML="";E.answerPlace.style.display="";E.letterPool.innerHTML="";E.letterPool.style.display="";const cleanA=a.toUpperCase().replace(/\\s/g,"");const isEnglish=/^[A-Z]+$/.test(cleanA);const abc=isEnglish?"ABCDEFGHIJKLMNOPQRSTUVWXYZ":"АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";let letters=cleanA.split('');let set=[...letters];let extras=(letters.length<=4?2:4);while(extras>0){const el=abc[Math.floor(Math.random()*abc.length)];set.push(el);extras--;}for(let i=set.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[set[i],set[j]]=[set[j],set[i]];}set.forEach((letter,idx)=>{const btn=document.createElement("button");btn.className="letter-btn";btn.textContent=letter;btn.onclick=()=>{if(btn.classList.contains("placed"))return;btn.classList.add("placed");const abtn=document.createElement("button");abtn.className="letter-btn";abtn.textContent=letter;abtn.onclick=()=>{btn.classList.remove("placed");abtn.remove();};E.answerPlace.appendChild(abtn);};E.letterPool.appendChild(btn);});}function getAnswer(){return[...E.answerPlace.children].map(e=>e.textContent).join("");}E.ctrls.querySelector("#check-btn").onclick=()=>{const t=getAnswer().toLowerCase(),a=d[i].a.toLowerCase().replace(/\\s/g,"");if(t===a){E.fb.textContent=s.correctText;E.fb.className="correct";showFbImg(s.correctImg);i++;setTimeout(l,1500);}else{E.fb.textContent=s.incorrectText;E.fb.className="error";showFbImg(s.incorrectImg);}};E.ctrls.querySelector("#clear-btn").onclick=()=>{l();};l();`;return\`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>\${s.gameTitle}</title><style>\${css}</style></head><body><div class="container"><h1>\${s.gameTitle}</h1><img id="game-image" src=""><p class="definition"></p><div id="answer-place"></div><div id="letter-pool"></div><div class="controls"><button id="check-btn" class="button">Проверить</button><button id="clear-btn" class="button">Сброс</button></div><p id="feedback"></p><img id="feedback-image"></div><script>\${js}<\/script></body></html>\`;}
-function generateGame(){const s=getSettings();const gameData=s.gameData.trim().split('\n').map(line=>{const parts=line.split('|');return parts.length<2||!parts[0].trim()||!parts[1].trim()?null:{q:parts[0].trim(),a:parts[1].trim(),img:(parts[2]||"").trim()};}).filter(Boolean);const html=s.gameType==='anagram'?generateAnagramGame(s,gameData):generateInputGame(s,gameData);document.getElementById('output-code').value=html;document.getElementById('output-iframe').value=`<iframe srcdoc="${html.replace(/"/g,'&quot;')}" width="100%" height="720" style="border:none;" allowfullscreen="allowfullscreen" title="${s.gameTitle}"></iframe>`;document.getElementById('preview-container').srcdoc=html;}
-function setLanguage(lang){currentLang=lang;const t=translations[lang];document.querySelectorAll("[id]").forEach(el=>{const key=el.id.replace(/-([a-z])/g,g=>g[1].toUpperCase());if(t[key]&&el.tagName!=='INPUT'&&el.tagName!=='TEXTAREA'&&el.tagName!=='SELECT'){el.innerHTML=t[key];}});document.getElementById("lang-toggle").innerHTML=lang==="ru"?"EN":"RU";}
-document.addEventListener("DOMContentLoaded",()=>{document.getElementById('generate-btn').addEventListener('click',generateGame);document.getElementById('lang-toggle').addEventListener("click",()=>{setLanguage(currentLang==="ru"?"en":"ru");generateGame();});document.getElementById('copy-iframe-btn').addEventListener("click",()=>{navigator.clipboard.writeText(document.getElementById('output-iframe').value).then(()=>{alert(translations[currentLang].copySuccess);});});document.getElementById('download-html-btn').addEventListener("click",()=>{const blob=new Blob([document.getElementById('output-code').value],{type:"text/html"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`${getSettings().gameTitle.replace(/[^a-z0-9]/gi,'_').toLowerCase()||'game'}.html`;a.click();URL.revokeObjectURL(a.href);});document.getElementById('final-effect-select').addEventListener('change',(e)=>{document.getElementById('final-effect-custom-url').style.display=e.target.value==='custom'?'block':'none';});document.getElementById('transparent-bg').addEventListener('change',(e)=>{document.getElementById('bg-color').disabled=e.target.checked;document.getElementById('bg-color2').disabled=e.target.checked;document.querySelector('.fill-type[data-target="bg-color"]').disabled=e.target.checked;});document.querySelectorAll('.fill-type').forEach(sel=>{const target=sel.getAttribute('data-target');sel.addEventListener('change',function(){const colorInput2=document.getElementById(target+"2");if(this.value==="gradient"){colorInput2.style.display="";}else{colorInput2.style.display="none";}});});document.getElementById('btn-radius').addEventListener('input',function(){document.getElementById('btn-radius-value').textContent=this.value+'px';});setLanguage("ru");generateGame();});
+const translations = {
+    ru: {
+        editorTitle: "Редактор Игры",
+        previewTitle: "Превью Игры",
+        sectionGeneral: "1. Общие настройки",
+        labelGameTitle: "Название/тема игры:",
+        sectionAppearance: "2. Внешний вид",
+        labelBgColor: "Цвет фона:",
+        labelTransparentBg: "Сделать фон прозрачным",
+        labelDefinitionBgColor: "Фон блока вопроса:",
+        labelBtnCheckBgColor: 'Цвет фона "Проверить":',
+        labelBtnCheckTextColor: 'Цвет текста "Проверить":',
+        labelBtnRestartBgColor: 'Цвет фона "Сброс":',
+        labelBtnRestartTextColor: 'Цвет текста "Сброс":',
+        labelBtnRadius: "Скругленность углов:",
+        sectionGameType: "3. Тип игры",
+        labelGameType: "Выберите тип задания:",
+        sectionContent: "4. Содержимое игры",
+        labelGameData: "Вопросы и ответы:",
+        helpText: "Формат: <b>Вопрос | Ответ | Ссылка на картинку (необязательно)</b>",
+        sectionFeedback: "5. Обратная связь",
+        labelFeedbackCorrect: "Текст при верном ответе:",
+        labelFeedbackCorrectImg: "Изображение (URL):",
+        labelFeedbackIncorrect: "Текст при неверном ответе:",
+        labelFeedbackIncorrectImg: "Изображение (URL):",
+        labelFeedbackFinal: "Текст по завершении игры:",
+        labelFinalEffectSelect: "Финальный эффект:",
+        generateBtn: "Сгенерировать и обновить превью",
+        sectionCode: "6. Готовый код",
+        labelOutputIframe: "1. Код для вставки в Genially:",
+        labelOutputCode: "2. Полный HTML-код (альтернатива):",
+        copySuccess: "Код скопирован!",
+        downloadSuccess: "Файл скачан!"
+    },
+    en: {
+        editorTitle: "Game Editor",
+        previewTitle: "Game Preview",
+        sectionGeneral: "1. General Settings",
+        labelGameTitle: "Game Title/Theme:",
+        sectionAppearance: "2. Appearance",
+        labelBgColor: "Background Color:",
+        labelTransparentBg: "Make background transparent",
+        labelDefinitionBgColor: "Question block background:",
+        labelBtnCheckBgColor: "Check button background:",
+        labelBtnCheckTextColor: "Check button text:",
+        labelBtnRestartBgColor: "Restart button background:",
+        labelBtnRestartTextColor: "Restart button text:",
+        labelBtnRadius: "Button corner rounding:",
+        sectionGameType: "3. Game Type",
+        labelGameType: "Choose task type:",
+        sectionContent: "4. Game Content",
+        labelGameData: "Questions and Answers:",
+        helpText: "Format: <b>Question | Answer | Image URL (optional)</b>",
+        sectionFeedback: "5. Feedback",
+        labelFeedbackCorrect: "Text for correct answer:",
+        labelFeedbackCorrectImg: "Image (URL):",
+        labelFeedbackIncorrect: "Text for incorrect answer:",
+        labelFeedbackIncorrectImg: "Image (URL):",
+        labelFeedbackFinal: "Text for game completion:",
+        labelFinalEffectSelect: "Final Effect:",
+        generateBtn: "Generate & Update Preview",
+        sectionCode: "6. Final Code",
+        labelOutputIframe: "1. Code to embed in Genially:",
+        labelOutputCode: "2. Full HTML (alternative):",
+        copySuccess: "Code copied!",
+        downloadSuccess: "File downloaded!"
+    }
+};
+
+let currentLang = "ru";
+
+// ——— СЛУЖЕБНЫЕ ФУНКЦИИ ———
+function getSettings() {
+    const s = {};
+    document.querySelectorAll('.editor input, .editor select, .editor textarea').forEach(el => {
+        const key = el.id.replace(/-([a-z])/g, g => g[1].toUpperCase());
+        s[key] = el.type === 'checkbox' ? el.checked : el.value;
+    });
+    // Просто получаем значения цветов напрямую
+    s.definitionBgFill = { value: document.getElementById("definition-bg-color").value };
+    s.btnCheckBgFill = { value: document.getElementById("btn-check-bg-color").value };
+    s.btnRestartBgFill = { value: document.getElementById("btn-restart-bg-color").value };
+    return s;
+}
+
+function getFillCss(obj, prop = "background-color") {
+    if (!obj || !obj.value) return "";
+    return `${prop}: ${obj.value} !important;`;
+}
+
+function getFinalEffectUrl(s) {
+    if (s.finalEffectSelect === "firefork") return "firefork";
+    if (s.finalEffectSelect === 'custom') return s.finalEffectCustomUrl;
+    return "";
+}
+
+function generateBaseCss(s) {
+    let bgCss = `background-color:${s.transparentBg ? 'transparent' : s.bgColor || '#f0f8ff'};`;
+    return `
+body{font-family:sans-serif;${bgCss}margin:0;padding:20px;display:flex;justify-content:center;align-items:center;min-height:100vh;box-sizing:border-box}
+.container{background:white;max-width:600px;width:90%;padding:20px;border-radius:10px;box-shadow:0 0 15px rgba(0,0,0,0.1);text-align:center}
+h1{margin:0 0 15px}
+#game-image{max-width:100%;max-height:150px;border-radius:8px;margin:0 auto 20px;object-fit:contain;display:block}
+.definition{font-size:1.2em;margin-bottom:20px;${getFillCss(s.definitionBgFill)}padding:10px;border-radius:8px;min-height:50px}
+#feedback{margin-top:20px;font-size:1.1em;font-weight:700;min-height:1.5em}
+#feedback-image{max-width:80px;margin-top:10px;border-radius:8px;display:none}
+.correct{color:#28a745}.error{color:#dc3545}
+.button{border:none;border-radius:${s.btnRadius}px;cursor:pointer;font-weight:bold;padding:12px 24px;margin:5px;user-select:none;transition:filter 0.2s}
+.button:hover{filter:brightness(0.9)}
+.final-overlay{position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.7);display:flex;justify-content:center;align-items:center;z-index:999;cursor:pointer}
+.final-overlay img,.final-overlay iframe{max-width:90vw;max-height:90vh;border-radius:12px}
+`;}
+
+// ——— ГЕНЕРАЦИЯ РЕЖИМОВ ———
+function generateAnagramGame(s, data) {
+    const css = generateBaseCss(s) +
+        `
+#clear-btn{${getFillCss(s.btnRestartBgFill)}color:${s.btnRestartTextColor};}
+#check-btn{${getFillCss(s.btnCheckBgFill)}color:${s.btnCheckTextColor};}
+.answer-display, .letter-pool{margin:20px 0;display:flex;flex-wrap:wrap;justify-content:center;gap:10px;}
+.answer-display{background:#eee;border-radius:8px;padding:15px;min-height:50px;border:2px dashed #ccc;}
+.letter-btn{font-size:1.5em;width:50px;height:50px;background-color:${s.btnCheckBgColor};color:${s.btnCheckTextColor};display:flex;justify-content:center;align-items:center}
+.letter-btn.placed{background-color:#6c757d;cursor:default}
+.controls{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+`;
+    const settingsJs = {
+        correctText: s.feedbackCorrect,
+        correctImg: s.feedbackCorrectImg,
+        incorrectText: s.feedbackIncorrect,
+        incorrectImg: s.feedbackIncorrectImg,
+        finalText: s.feedbackFinal
+    };
+    const js = `
+let i=0;const d=${JSON.stringify(data)},s=${JSON.stringify(settingsJs)},u="${getFinalEffectUrl(s)}";
+const E={h:document.querySelector("h1"),img:document.getElementById("game-image"),def:document.querySelector(".definition"),ans:document.querySelector(".answer-display"),pool:document.querySelector(".letter-pool"),fb:document.getElementById("feedback"),fbi:document.getElementById("feedback-image"),ctrls:document.querySelector(".controls")};
+function showFbImg(u){E.fbi.src=u;E.fbi.style.display=u?"block":"none"}
+function l(){
+    showFbImg(null);E.fb.textContent="";
+    E.ans.style.display = "";
+    E.pool.style.display = "";
+    if(i>=d.length){
+        E.def.textContent=s.finalText;
+        E.img.style.display="none";
+        E.ans.innerHTML="";E.ans.style.display = "none";
+        E.pool.innerHTML="";E.pool.style.display = "none";
+        E.ctrls.style.display="none";
+        if(u){
+            const e=document.createElement("div");
+            e.className="final-overlay";
+            if(u==="firefork"){
+                e.innerHTML='<iframe src="https://trualinka.github.io/firefork/" style="border:none;width:95vw;height:60vh;" allowfullscreen></iframe>';
+            }else{
+                e.innerHTML=\`<img src="\${u}">\`;
+            }
+            e.onclick=()=>e.remove();
+            document.body.appendChild(e)
+        }
+        return
+    }
+    const{q,a,img}=d[i];
+    E.def.textContent=q;
+    E.img.src=img;
+    E.img.style.display=img?"block":"none";
+    E.ans.innerHTML="";
+    E.ans.style.display = "";
+    E.pool.innerHTML="";
+    E.pool.style.display = "";
+    [...a.toUpperCase().replace(/\\s/g,"")].sort(()=>.5-Math.random()).forEach(t=>{
+        const a=document.createElement("button");
+        a.className="button letter-btn";
+        a.textContent=t;
+        a.onclick=()=>{
+            if(a.classList.contains("placed"))return;
+            a.classList.add("placed");
+            const e=document.createElement("button");
+            e.className="button letter-btn";
+            e.textContent=t;
+            e.onclick=()=>{
+                a.classList.remove("placed");
+                e.remove()
+            };
+            E.ans.appendChild(e)
+        };
+        E.pool.appendChild(a)
+    })
+}
+E.ctrls.querySelector("#check-btn").onclick=()=>{
+    const t=[...E.ans.children].map(e=>e.textContent).join(""),a=d[i].a.toUpperCase().replace(/\\s/g,"");
+    if(t===a){
+        E.fb.textContent=s.correctText;E.fb.className="correct";showFbImg(s.correctImg);
+        i++;
+        setTimeout(l,1500)
+    }else{
+        E.fb.textContent=s.incorrectText;E.fb.className="error";showFbImg(s.incorrectImg)
+    }
+};
+E.ctrls.querySelector("#clear-btn").onclick=()=>l();
+l();
+`;
+    return `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${s.gameTitle}</title><style>${css}</style></head><body><div class="container"><h1>${s.gameTitle}</h1><img id="game-image" src=""><p class="definition"></p><div class="answer-display"></div><div class="letter-pool"></div><div class="controls"><button id="check-btn" class="button">Проверить</button><button id="clear-btn" class="button">Сброс</button></div><p id="feedback"></p><img id="feedback-image"></div><script>${js}<\/script></body></html>`;
+}
+
+function generateInputGame(s, data) {
+const css = generateBaseCss(s) + `
+#answer-place { min-height: 50px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 15px 0 25px; background: #f3f3f3; border-radius: 8px; border:2px dashed #ddd; padding: 15px;}
+#letter-pool { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;}
+.letter-btn{font-size:1.3em;width:46px;height:46px;${getFillCss(s.btnCheckBgFill)}color:${s.btnCheckTextColor};display:flex;justify-content:center;align-items:center; border:none; border-radius: ${s.btnRadius}px; cursor:pointer;}
+.letter-btn.placed{background-color:#bdbdbd;cursor:default;}
+.controls{display:flex;justify-content:center;align-items:center;gap:10px;margin-bottom:15px;}
+#check-btn{${getFillCss(s.btnCheckBgFill)}color:${s.btnCheckTextColor};}
+#clear-btn{${getFillCss(s.btnRestartBgFill)}color:${s.btnRestartTextColor};}
+`;
+
+const settingsJs = {
+    correctText: s.feedbackCorrect,
+    correctImg: s.feedbackCorrectImg,
+    incorrectText: s.feedbackIncorrect,
+    incorrectImg: s.feedbackIncorrectImg,
+    finalText: s.feedbackFinal
+};
+
+const js = `
+let i=0;
+const d=${JSON.stringify(data)},s=${JSON.stringify(settingsJs)},u="${getFinalEffectUrl(s)}";
+const E={
+  h:document.querySelector("h1"),
+  img:document.getElementById("game-image"),
+  def:document.querySelector(".definition"),
+  answerPlace:document.getElementById("answer-place"),
+  letterPool:document.getElementById("letter-pool"),
+  fb:document.getElementById("feedback"),
+  fbi:document.getElementById("feedback-image"),
+  ctrls:document.querySelector(".controls")
+};
+function showFbImg(u){E.fbi.src=u;E.fbi.style.display=u?"block":"none"}
+function l(){
+  showFbImg(null);E.fb.textContent="";
+  E.answerPlace.style.display="";
+  E.letterPool.style.display="";
+  if(i>=d.length){
+    E.def.textContent=s.finalText;
+    E.img.style.display="none";
+    E.answerPlace.innerHTML="";
+    E.answerPlace.style.display="none";
+    E.letterPool.innerHTML="";
+    E.letterPool.style.display="none";
+    E.ctrls.style.display="none";
+    if(u){
+      const e=document.createElement("div");
+      e.className="final-overlay";
+      if(u==="firefork"){
+        e.innerHTML='<iframe src="https://trualinka.github.io/firefork/" style="border:none;width:95vw;height:60vh;" allowfullscreen></iframe>';
+      }else{
+        e.innerHTML=\`<img src="\${u}">\`;
+      }
+      e.onclick=()=>e.remove();
+      document.body.appendChild(e);
+    }
+    return;
+  }
+  const {q,a,img} = d[i];
+  E.def.textContent=q;
+  E.img.src=img;E.img.style.display=img?"block":"none";
+  E.ctrls.style.display="flex";
+  E.answerPlace.innerHTML="";
+  E.answerPlace.style.display="";
+  E.letterPool.innerHTML="";
+  E.letterPool.style.display="";
+  const cleanA = a.toUpperCase().replace(/\\s/g,"");
+  const isEnglish = /^[A-Z]+$/.test(cleanA);
+  const abc = isEnglish ? "ABCDEFGHIJKLMNOPQRSTUVWXYZ" : "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
+  let letters = cleanA.split('');
+  let set = [...letters];
+  let extras = (letters.length <= 4 ? 2 : 4);
+  while (extras>0) {
+    const el = abc[Math.floor(Math.random()*abc.length)];
+    set.push(el);
+    extras--;
+  }
+  for (let i=set.length-1;i>0;i--) {
+    let j=Math.floor(Math.random()*(i+1));
+    [set[i],set[j]]=[set[j],set[i]];
+  }
+  set.forEach((letter,idx)=>{
+    const btn = document.createElement("button");
+    btn.className="letter-btn";
+    btn.textContent=letter;
+    btn.onclick=()=>{
+      if(btn.classList.contains("placed")) return;
+      btn.classList.add("placed");
+      const abtn=document.createElement("button");
+      abtn.className="letter-btn";
+      abtn.textContent=letter;
+      abtn.onclick=()=>{
+        btn.classList.remove("placed");abtn.remove();
+      };
+      E.answerPlace.appendChild(abtn);
+    };
+    E.letterPool.appendChild(btn);
+  });
+}
+function getAnswer(){
+  return [...E.answerPlace.children].map(e=>e.textContent).join("");
+}
+E.ctrls.querySelector("#check-btn").onclick=()=>{
+  const t = getAnswer().toLowerCase(), a = d[i].a.toLowerCase().replace(/\\s/g,"");
+  if(t===a){
+    E.fb.textContent=s.correctText;E.fb.className="correct";showFbImg(s.correctImg);
+    i++;setTimeout(l,1500);
+  }else{
+    E.fb.textContent=s.incorrectText;E.fb.className="error";showFbImg(s.incorrectImg);
+  }
+};
+E.ctrls.querySelector("#clear-btn").onclick=()=>{
+  l();
+};
+l();
+`;
+
+  return `
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>${s.gameTitle}</title>
+<style>${css}</style>
+</head>
+<body>
+<div class="container">
+  <h1>${s.gameTitle}</h1>
+  <img id="game-image" src="">
+  <p class="definition"></p>
+  <div id="answer-place"></div>
+  <div id="letter-pool"></div>
+  <div class="controls">
+    <button id="check-btn" class="button">Проверить</button>
+    <button id="clear-btn" class="button">Сброс</button>
+  </div>
+  <p id="feedback"></p>
+  <img id="feedback-image">
+</div>
+<script>${js}<\/script>
+</body>
+</html>
+`;
+}
+
+function generateGame() {
+    const s = getSettings();
+    const gameData = s.gameData.trim().split('\n').map(line => {
+        const parts = line.split('|');
+        return parts.length < 2 || !parts[0].trim() || !parts[1].trim() ? null : { q: parts[0].trim(), a: parts[1].trim(), img: (parts[2] || "").trim() };
+    }).filter(Boolean);
+    const html = s.gameType === 'anagram'
+        ? generateAnagramGame(s, gameData)
+        : generateInputGame(s, gameData);
+    document.getElementById('output-code').value = html;
+    document.getElementById('output-iframe').value =
+      `<iframe srcdoc="${html.replace(/"/g, '&quot;')}" width="100%" height="720" style="border:none;" allowfullscreen="allowfullscreen" title="${s.gameTitle}"></iframe>`;
+    document.getElementById('preview-container').srcdoc = html;
+}
+function setLanguage(lang) {
+    currentLang = lang;
+    const t = translations[lang];
+    document.querySelectorAll("[id]").forEach(el => {
+        const key = el.id.replace(/-([a-z])/g, g => g[1].toUpperCase());
+        if (t[key] && el.tagName !== 'INPUT' && el.tagName !== 'TEXTAREA' && el.tagName !== 'SELECT') {
+             el.innerHTML = t[key];
+        }
+    });
+    document.getElementById("lang-toggle").innerHTML = lang === "ru" ? "EN" : "RU";
+}
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById('generate-btn').addEventListener('click', generateGame);
+    document.getElementById('lang-toggle').addEventListener("click", () => {
+        setLanguage(currentLang === "ru" ? "en" : "ru");
+        generateGame();
+    });
+    document.getElementById('copy-iframe-btn').addEventListener("click", () => {
+        navigator.clipboard.writeText(document.getElementById('output-iframe').value).then(() => {
+            alert(translations[currentLang].copySuccess);
+        });
+    });
+    document.getElementById('download-html-btn').addEventListener("click", () => {
+        const blob = new Blob([document.getElementById('output-code').value], { type: "text/html" });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = `${getSettings().gameTitle.replace(/[^a-z0-9]/gi, '_').toLowerCase() || 'game'}.html`;
+        a.click();
+        URL.revokeObjectURL(a.href);
+    });
+    document.getElementById('final-effect-select').addEventListener('change', (e) => {
+        document.getElementById('final-effect-custom-url').style.display = e.target.value === 'custom' ? 'block' : 'none';
+    });
+    document.getElementById('transparent-bg').addEventListener('change', (e) => {
+        document.getElementById('bg-color').disabled = e.target.checked;
+    });
+    document.getElementById('btn-radius').addEventListener('input', function() {
+        document.getElementById('btn-radius-value').textContent = this.value + 'px';
+    });
+    setLanguage("ru");
+    generateGame();
+});
 </script>
 </body>
 </html>
