@@ -149,7 +149,7 @@ Process of water turning into vapor | Evaporation |</textarea>
     <iframe id="preview-container" title="Превью игры"></iframe>
   </div>
 <script>
-/* ...все данные переводов из твоей версии, не меняем! ... */
+// ...Твой блок translations - без изменений...
 
 function getFillValue(colorId) {
     const sel = document.querySelector('.fill-type[data-target="' + colorId + '"]');
@@ -162,7 +162,7 @@ function getFillValue(colorId) {
     }
 }
 
-/* ...все остальные функции без изменений, кроме блока показа-скрытия color2 палитры... */
+// ...Без изменений: getSettings, getFillCss, getFinalEffectUrl, generateBaseCss, generateAnagramGame, generateInputGame, generateGame, setLanguage ...
 
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('generate-btn').addEventListener('click', generateGame);
